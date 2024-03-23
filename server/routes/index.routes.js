@@ -1,6 +1,6 @@
 import express from "express"
-import enhanceController from "../controllers/enhance.controller"
-import upload from "../middlewares/multer.middleware"
+import enhanceController from "../controllers/enhance.controller.js"
+import upload from "../middlewares/multer.middleware.js"
 
 const router = express.Router()
 

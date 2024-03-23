@@ -4,7 +4,7 @@ import http from "http"
 import path, { dirname } from "path"
 import { fileURLToPath } from "url"
 
-import routes from "./routes/index.routes.js"
+import routes from "./src/routes/index.routes.js"
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url)

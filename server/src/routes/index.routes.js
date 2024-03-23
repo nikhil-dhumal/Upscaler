@@ -4,6 +4,6 @@ import upload from "../middlewares/multer.middleware.js"
 
 const router = express.Router()
 
-router.post("/enhance", upload.single("images"), enhanceController.enhance)
+router.post("/enhance", upload.single("image"), enhanceController.enhance)
 
 export default router

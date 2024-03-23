@@ -8,7 +8,7 @@ const storage = diskStorage({
   destination: async (req, file, callback) => {
     try {
       const __dirname = path.dirname(fileURLToPath(import.meta.url))
-      const destDir = path.join(__dirname, "../input")
+      const destDir = path.join(__dirname, "../super_resolution/input")
 
       await fs.mkdir(destDir, { recursive: true })
 

@@ -7,29 +7,34 @@ import { exec } from "child_process"
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const inputDir = path.join(__dirname, "../../super_resolution/input")
 const outputDir = path.join(__dirname, "../../super_resolution/output")
-const testFilePath = path.join(__dirname, "../../super_resolution/test.py")
+const pythonScriptDirectory = path.join(__dirname, "../../super_resolution")
 
 const enhance = async (req, res) => {
   try {
+    const id = req.params.id
+    const originalName = req.file.originalname
+    const modifiedFileName = `${id}_${originalName}`
     const execPromise = util.promisify(exec)
-    const pythonScriptDirectory = path.join(__dirname, "../../super_resolution")
-    await execPromise(`python ${testFilePath}`, { cwd: pythonScriptDirectory })
+    await execPromise(`python test.py -filename ${modifiedFileName}`, { cwd: pythonScriptDirectory })
 
-    const imageName = await fs.readdir(outputDir)
-    const filePath = path.join(outputDir, imageName[0])
-    const fileData = await fs.readFile(filePath)
-
+    const filePath = path.join(inputDir, modifiedFileName)
+    const enhancedFilePath = path.join(outputDir, `enhanced_${modifiedFileName}`)
+    const fileData = await fs.readFile(enhancedFilePath)
     const dataUrl = `data:image/jpegbase64,${fileData.toString('base64')}`
 
-    // await fs.rm(inputDir, { recursive: true, force: true })
-    // await fs.rm(outputDir, { recursive: true, force: true })
+    res.once("finish", async () => {
+      try {
+        await fs.unlink(filePath)
+        await fs.unlink(enhancedFilePath)
+      } catch (err) {
+        console.error(`Failed to delete files: ${err}`)
+      }
+    })
     
     return res.status(200).json({
-      fileName: imageName,
+      fileName: originalName,
       data: dataUrl
     })
-
-    return res.status(200).json({message: ""})
   } catch (error) {
     console.log(error);
     return res.status(500).json({

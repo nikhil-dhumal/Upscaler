@@ -11,14 +11,28 @@ const pythonScriptDirectory = path.join(__dirname, "../../super_resolution")
 
 const enhance = async (req, res) => {
   try {
-    const id = req.params.id
-    const originalName = req.file.originalname
-    const modifiedFileName = `${id}_${originalName}`
-    const execPromise = util.promisify(exec)
-    await execPromise(`python test.py -filename ${modifiedFileName}`, { cwd: pythonScriptDirectory })
+    await fs.mkdir(outputDir, { recursive: true })
 
-    const filePath = path.join(inputDir, modifiedFileName)
-    const enhancedFilePath = path.join(outputDir, `enhanced_${modifiedFileName}`)
+    console.log(req);
+    const fileName = req.body.fileName
+    const filePath = path.join(inputDir, fileName)
+    const enhancedFilePath = path.join(outputDir, `enhanced_${fileName}`)
+
+    try {
+      await fs.access(filePath);
+    } catch (error) {
+      return res.status(400).json({ message: "File not found." });
+    }
+
+    const execPromise = util.promisify(exec)
+    await execPromise(`python test.py -filename ${fileName}`, { cwd: pythonScriptDirectory })
+
+    try {
+      await fs.access(enhancedFilePath);
+    } catch (error) {
+      return res.status(400).json({ message: "Enhanced file not found." });
+    }
+    
     const fileData = await fs.readFile(enhancedFilePath)
     const dataUrl = `data:image/jpegbase64,${fileData.toString('base64')}`
 

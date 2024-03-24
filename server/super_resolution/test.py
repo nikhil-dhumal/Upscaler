@@ -32,4 +32,4 @@ with torch.no_grad():
 
 output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
 output = (output * 255.0).round()
-cv2.imwrite(f"output/enhanced_{args.filename}.png", output)
+cv2.imwrite(f"output/enhanced_{args.filename}", output)

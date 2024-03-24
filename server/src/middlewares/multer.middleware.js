@@ -18,11 +18,7 @@ const storage = diskStorage({
     }
   },
   filename: (req, file, callback) => {
-    const id = req.params.id
-    const originalName = req.file.originalname
-    const modifiedFileName = `${id}_${originalName}`
-
-    callback(null, modifiedFileName)
+    callback(null, file.originalname)
   },
 })
 

@@ -13,7 +13,6 @@ const enhance = async (req, res) => {
   try {
     await fs.mkdir(outputDir, { recursive: true })
 
-    console.log(req);
     const fileName = req.body.fileName
     const filePath = path.join(inputDir, fileName)
     const enhancedFilePath = path.join(outputDir, `enhanced_${fileName}`)

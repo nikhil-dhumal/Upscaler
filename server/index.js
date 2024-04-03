@@ -3,6 +3,7 @@ import cors from "cors"
 import http from "http"
 import path, { dirname } from "path"
 import { fileURLToPath } from "url"
+import "dotenv/config"
 
 import routes from "./src/routes/index.routes.js"
 

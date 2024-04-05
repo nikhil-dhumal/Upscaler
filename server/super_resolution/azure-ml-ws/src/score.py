@@ -1,5 +1,7 @@
 import io
 import json
+import base64
+import ast
 from PIL import Image
 import numpy as np
 import torch
@@ -7,6 +9,7 @@ import RRDBNet_arch as arch
 from azureml.core.model import Model
 
 
+# Initialize the model and device
 def init():
     global model
     global device
@@ -25,15 +28,29 @@ def init():
     model = model.to(device)
 
 
+# Process the JSON payload containing the file
 def run(raw_data):
     try:
-        # Load the JSON payload
-        data = json.loads(raw_data)
-        # Extract the image data from the JSON payload
-        img_data = data["image"]
+        # Check for empty payload
+        if not raw_data:
+            return json.dumps({"error": "Empty payload received"})
 
-        # Decode the image data and load it as a PIL Image
-        img = Image.open(io.BytesIO(img_data))
+        # Load the JSON payload
+        unescaped_data = ast.literal_eval(raw_data)
+        data = json.loads(unescaped_data)
+
+        # Verify that the "image" key exists in the JSON payload
+        if "image" not in data:
+            return json.dumps({"error": "Image data not found in the JSON payload"})
+
+        # Extract the image data from the JSON payload
+        image_base64 = data["image"]
+
+        # Decode the Base64 image data
+        image_data = base64.b64decode(image_base64)
+
+        # Load the image from the decoded data
+        img = Image.open(io.BytesIO(image_data))
         img = np.array(img)
         img = img * 1.0 / 255
         img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
@@ -57,7 +74,14 @@ def run(raw_data):
         output_bytes.seek(0)
         enhanced_img_data = output_bytes.read()
 
-        # Return the enhanced image data with the same key "image"
-        return {"image": enhanced_img_data}
+        # Encode the enhanced image data using Base64
+        encoded_enhanced_img_data = base64.b64encode(enhanced_img_data).decode("utf-8")
+
+        # Return the encoded enhanced image data with the same key "image"
+        return json.dumps({"image": encoded_enhanced_img_data})
+    except json.JSONDecodeError as json_error:
+        return json.dumps({"error": "Failed to decode JSON payload"})
+    except KeyError as key_error:
+        return json.dumps({"error": "Missing required key in JSON payload"})
     except Exception as e:
-        return str(e)
+        return json.dumps({"error": str(e)})

@@ -1,6 +1,6 @@
 {
-    "subscription_id": "",
-    "resource_group": "",
-    "workspace_name": "",
-    "region": ""
+    "subscription_id": "your_subscription_id",
+    "resource_group": "your_resource_group_name",
+    "workspace_name": "your_workspace_name",
+    "region": "your_region"
 }

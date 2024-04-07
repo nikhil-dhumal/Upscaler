@@ -4,23 +4,7 @@ import fs from "fs/promises"
 import path from "path"
 import { fileURLToPath } from "url" 
 
-const storage = diskStorage({
-  destination: async (req, file, callback) => {
-    try {
-      const __dirname = path.dirname(fileURLToPath(import.meta.url))
-      const destDir = path.join(__dirname, "../../super_resolution/input")
-
-      await fs.mkdir(destDir, { recursive: true })
-
-      callback(null, destDir)
-    } catch (error) {
-      callback(error, null)
-    }
-  },
-  filename: (req, file, callback) => {
-    callback(null, file.originalname)
-  },
-})
+const storage = multer.memoryStorage()
 
 const filter = (req, file, callback) => {
   if (

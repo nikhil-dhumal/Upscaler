@@ -1,8 +1,4 @@
 import multer from "multer"
-import { diskStorage } from "multer"
-import fs from "fs/promises"
-import path from "path"
-import { fileURLToPath } from "url" 
 
 const storage = multer.memoryStorage()
 

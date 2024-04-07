@@ -1,7 +1,7 @@
 import io
 import json
 import base64
-import ast
+# import ast 
 from PIL import Image
 import numpy as np
 import torch
@@ -36,8 +36,10 @@ def run(raw_data):
             return json.dumps({"error": "Empty payload received"})
 
         # Load the JSON payload
-        unescaped_data = ast.literal_eval(raw_data)
-        data = json.loads(unescaped_data)
+        # unescaped_data = ast.literal_eval(raw_data)
+        # data = json.loads(unescaped_data)
+        # Above two statements work with python server, in this project node js is used so those lines are commented along with import of "ast" library
+        data = json.loads(raw_data)
 
         # Verify that the "image" key exists in the JSON payload
         if "image" not in data:

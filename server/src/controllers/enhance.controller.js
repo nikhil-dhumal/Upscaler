@@ -25,7 +25,9 @@ const enhance = async (req, res) => {
 
       if (enhancedImgData) {
         const filename = "enhaced_" + file.originalname
-        return res.status(200).json({ filename, image: enhancedImgData })
+        const imgUrl = `data:image/jpegbase64,${enhancedImgData}`
+
+        return res.status(200).json({ filename, image: imgUrl })
       } else {
         console.error("Error: No enhanced image data received from the server")
         return res.status(500).json({ error: "Error processing the image" })

@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f5021bad.css",
+    "main.js": "/static/js/main.337764e8.js",
+    "static/media/city.jpg": "/static/media/city.659df3805e897501c92c.jpg",
+    "static/media/people.jpg": "/static/media/people.87ae83d02c58756a877f.jpg",
+    "static/media/headphone.jpg": "/static/media/headphone.bf0599513c8ab074c107.jpg",
+    "static/media/portrait.jpg": "/static/media/portrait.ef4c7b0da8b3544ac396.jpg",
+    "static/media/hero_img_small.png": "/static/media/hero_img_small.baa1e12d75d65d6468dd.png",
+    "static/media/anime.jpg": "/static/media/anime.d38e06e2cceabcd9afbb.jpg",
+    "static/media/dog.jpg": "/static/media/dog.88f7ec654a3dff5a6a57.jpg",
+    "static/media/hero_img.png": "/static/media/hero_img.ec9f137507ca4c96a82e.png",
+    "index.html": "/index.html",
+    "main.f5021bad.css.map": "/static/css/main.f5021bad.css.map",
+    "main.337764e8.js.map": "/static/js/main.337764e8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f5021bad.css",
+    "static/js/main.337764e8.js"
+  ]
+}

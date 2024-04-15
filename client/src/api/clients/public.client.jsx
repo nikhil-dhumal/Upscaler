@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "https://upscler-server.onrender.com"
+const baseURL = "https://upscler-server.onrender.com/api/v1"
 
 const publicClient = axios.create({ baseURL })
 

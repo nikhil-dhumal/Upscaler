@@ -1,2 +1,0 @@
-SCORING_URI=YOUR_SCORING_URI (could be obtained through endpoint in azure ml workspace or through the deploy.ipynb)
-PORT=5000

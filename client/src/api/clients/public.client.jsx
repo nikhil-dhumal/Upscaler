@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "upscaler4x.azurewebsites.net"
+const baseURL = "upscaler4x.azurewebsites.net/api/v1"
 
 const publicClient = axios.create({ baseURL })
 

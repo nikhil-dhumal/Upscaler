@@ -1,7 +1,6 @@
 import axios from "axios"
-import config from "../../config.json"
 
-const baseURL = config.server_url
+const baseURL = "https://upscler-server.onrender.com"
 
 const publicClient = axios.create({ baseURL })
 

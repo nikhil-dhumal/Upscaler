@@ -1,10 +1,9 @@
 import axios from "axios"
+import config from "../../config.json"
 
-const baseURL = "http://127.0.0.1:5000/api/v1"
+const baseURL = config.server_url
 
-const publicClient = axios.create({
-  baseURL
-})
+const publicClient = axios.create({ baseURL })
 
 publicClient.interceptors.request.use(async (config) => {
   config.headers['Content-Type'] = 'multipart/form-data'

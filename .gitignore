@@ -24,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 azure_configs.json
+config.json
